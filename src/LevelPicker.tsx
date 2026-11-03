@@ -1,4 +1,4 @@
-import { useSyncExternalStore, type CSSProperties } from "react";
+import { useEffect, useState, useSyncExternalStore, type CSSProperties } from "react";
 import { GoldStar } from "./components/GoldStar";
 import { fmt } from "./modes/number";
 import { casesOf } from "./puzzles/level";
@@ -7,6 +7,44 @@ import { isUnlocked, progress, standingOf } from "./puzzles/progress";
 import { href } from "./router";
 
 const CHAPTER_COLORS = ["#FFE14A", "#7ADFFF", "#C6F54E", "#FFB020", "#CBBDFF", "#FF7AA8"];
+
+/** Quiet, out-of-the-way reset control for the bottom of the levels page. */
+function ResetProgressButton() {
+  const [confirming, setConfirming] = useState(false);
+
+  useEffect(() => {
+    if (!confirming) return;
+    const id = window.setTimeout(() => setConfirming(false), 5000);
+    return () => window.clearTimeout(id);
+  }, [confirming]);
+
+  if (!confirming) {
+    return (
+      <button type="button" className="reset-btn" onClick={() => setConfirming(true)}>
+        Reset all progress
+      </button>
+    );
+  }
+
+  return (
+    <div className="reset-confirm" role="group" aria-label="Reset all progress?">
+      <span className="reset-confirm-label">Reset all progress?</span>
+      <button
+        type="button"
+        className="text-btn reset-confirm-yes"
+        onClick={() => {
+          progress.reset();
+          setConfirming(false);
+        }}
+      >
+        Yes, reset
+      </button>
+      <button type="button" className="text-btn" onClick={() => setConfirming(false)}>
+        Cancel
+      </button>
+    </div>
+  );
+}
 
 export function LevelPicker() {
   const data = useSyncExternalStore(progress.subscribe, progress.getSnapshot);
@@ -80,6 +118,10 @@ export function LevelPicker() {
           </ol>
         </section>
       ))}
+
+      <footer className="levels-footer">
+        <ResetProgressButton />
+      </footer>
     </div>
   );
 }
