@@ -1716,6 +1716,53 @@ a.level-tile:active {
   text-shadow: 2px 2px 0 var(--ink);
 }
 
+/* Levels footer: quiet reset control ---------------------------------------- */
+
+.levels-footer {
+  display: flex;
+  justify-content: center;
+  padding: 6px 0 0;
+}
+
+.reset-btn {
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: rgba(28, 25, 23, 0.55);
+  text-decoration: underline dotted;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  color: var(--ink);
+}
+
+.reset-confirm {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px 6px 14px;
+  background: var(--paper);
+  border: var(--line);
+  border-radius: 999px;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.reset-confirm-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.reset-confirm .text-btn {
+  font-size: 0.8rem;
+}
+
+.reset-confirm-yes {
+  background: var(--pink);
+}
+
 @keyframes shake {
   0%,
   100% {
