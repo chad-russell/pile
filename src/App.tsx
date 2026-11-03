@@ -12,7 +12,9 @@ export function App() {
   const level = route.name === "play" ? levelById(route.id) : undefined;
   const playable = level != null && isUnlocked(data, level);
 
-  useEffect(() => window.scrollTo(0, 0), [route.name]);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route.name]);
 
   if (route.name === "free") return <Sandbox />;
   if (playable) return <Puzzle key={level.id} level={level} />;
